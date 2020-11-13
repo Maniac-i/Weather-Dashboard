@@ -1,35 +1,32 @@
-var cityName = ""
-
-//Current Weather API call URL
-var currentURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=5a57f19b58dbcee3e062fd11804936d7"
-
-//5 Day API call URL
-var fiveDayURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=5a57f19b58dbcee3e062fd11804936d7"
-
 
 //Current Weather API Call
-function displayCurrentWeather() {
-  
-  let cityName = "";
+function displayCurrentWeather(inputtedCity) {
+
+  let cityName = inputtedCity;
   var currentURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=5a57f19b58dbcee3e062fd11804936d7";
 
   $.ajax({
 
-  url: currentURL,
+    url: currentURL,
 
-  method: "GET"
+    method: "GET"
 
 }).then(function(city){
 
-//Do something
+  console.log(city);
+  var temp = (city.main.temp - 273.15) * (9/5) + 32;
 
-  })
+  $(".tempText").text(" " + temp.toFixed(1) + " °F");
+  $(".humidText").text(" " + city.main.humidity + " %");
+  $(".windText").text(" " + city.wind.speed + " MPH");
+  $(".uvText").text(" " + city.main.temp);
+  }) 
 }
 
 //5 Day Forecast API Call
 function displayFiveDay() {
 
-  let cityName = "";
+  let cityName = "Columbus";
   var fiveDayURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=5a57f19b58dbcee3e062fd11804936d7";
 
 $.ajax({
@@ -61,6 +58,7 @@ $(".btn").on("click", function(event) {
   
   $("#cityList").append(createdListItem);
   
+  displayCurrentWeather(inputtedCity);
   
 
 });
