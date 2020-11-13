@@ -16,11 +16,10 @@
     <span id="weatherDashboard" class="navbar-brand mb-0 h1">Weather Dashboard</span>
   </nav>
 
-  <div class="container">
-
+  <div class="container-fluid">
     <div class="row">
-      <div class="col-4 bg-light searchCity">
 
+      <div class="col-4 bg-light searchCity">
         <h2 id="searchForACity">Search for a City:</h2>
         <form class="form-inline">
           <input class="form-control mr-sm-2" type="search" placeholder="" aria-label="Search">
@@ -30,8 +29,8 @@
         <ul class="list-group">
           <li class="list-group-item">Cleveland</li>
         </ul>
-
       </div>
+
       <div class="col-8">
         <div class="row">
 
@@ -42,21 +41,77 @@
             <div class="humidity mb-3">Humidity:<span class="humidText"></span></div>
             <div class="windSpeed mb-3">Wind Speed:<span class="windText"></span></div>
             <div class="uvIndex mb-n4">UV Index:<span class="uvText"></span></div>
-            
+
+          </div>
+        </div>
+        <h2 id="forecast">5-Day Forecast:</h2>
+
+        <div class="row">
+          <div class="col">
+            <div class="card w-auto">
+              <div class="card-body">
+                <div class="date mt-n3 mb-3"><span class="dateText">Date</span></div>
+                <img src="iconfinder_sun-symbol_110801.png" class="" alt="weather icon">
+                <div class="temperature mb-3 mt-3">Temperature:<span class="tempText"></span></div>
+                <div class="humidity mb-0">Humidity:<span class="humidText"></span></div>
+              </div>
+            </div>
           </div>
 
+          <div class="col">
+            <div class="card w-auto">
+              <div class="card-body">
+                <div class="date mt-n3 mb-3"><span class="dateText">Date</span></div>
+                <img src="iconfinder_sun-symbol_110801.png" class="" alt="weather icon">
+                <div class="temperature mb-3 mt-3">Temperature:<span class="tempText"></span></div>
+                <div class="humidity mb-0">Humidity:<span class="humidText"></span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card w-auto">
+              <div class="card-body">
+                <div class="date mt-n3 mb-3"><span class="dateText">Date</span></div>
+                <img src="iconfinder_sun-symbol_110801.png" class="" alt="weather icon">
+                <div class="temperature mb-3 mt-3">Temperature:<span class="tempText"></span></div>
+                <div class="humidity mb-0">Humidity:<span class="humidText"></span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card w-auto">
+              <div class="card-body">
+                <div class="date mt-n3 mb-3"><span class="dateText">Date</span></div>
+                <img src="iconfinder_sun-symbol_110801.png" class="" alt="weather icon">
+                <div class="temperature mb-3 mt-3">Temperature:<span class="tempText"></span></div>
+                <div class="humidity mb-0">Humidity:<span class="humidText"></span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card w-auto">
+              <div class="card-body">
+                <div class="date mt-n3 mb-3"><span class="dateText">Date</span></div>
+                <img src="iconfinder_sun-symbol_110801.png" class="" alt="weather icon">
+                <div class="temperature mb-3 mt-3">Temperature:<span class="tempText"></span></div>
+                <div class="humidity mb-0">Humidity:<span class="humidText"></span></div>
+              </div>
+            </div>
+          </div>
+
+
+
         </div>
-        <div class="row">
 
 
 
-
-
-
-        </div>
       </div>
     </div>
   </div>
+  
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

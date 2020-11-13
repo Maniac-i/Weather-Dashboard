@@ -11,10 +11,23 @@
   font-size: 40px;
 }
 
+#forecast {
+  font-size: 25px;
+}
+
 .searchCity{
   height: 100%;
 }
 
 .jumbotron {
   width: 100%;
+}
+
+.card-body {
+  background-color: rgb(98, 165, 98);
+  color: white;
+}
+
+.dateText {
+  font-size: 25px;
 }
