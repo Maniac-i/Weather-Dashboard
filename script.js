@@ -2,9 +2,10 @@
 
 
 
-//Current Weather API Call to populate jumbotron
+//Calls the Current Weather & UV Index API and populates jumbotron
 function displayCurrentWeather(inputtedCity) {
 
+  //Current Weather API call
   let cityName = inputtedCity;
   var currentURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=5a57f19b58dbcee3e062fd11804936d7";
 
@@ -16,18 +17,17 @@ function displayCurrentWeather(inputtedCity) {
 
   }).then(function (city) {
 
-    console.log(city);
     var temp = (city.main.temp - 273.15) * (9 / 5) + 32;
     lat = city.coord.lat;
     lon = city.coord.lon;
+
     $(".tempText").text(" " + temp.toFixed(1) + " °F");
     $(".humidText").text(" " + city.main.humidity + " %");
     $(".windText").text(" " + city.wind.speed + " MPH");
     $("#city").text(city.name);
 
-
     //UV Index API call
-    let uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=5a57f19b58dbcee3e062fd11804936d7"
+    let uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=5a57f19b58dbcee3e062fd11804936d7";
 
     $.ajax({
 
@@ -36,9 +36,23 @@ function displayCurrentWeather(inputtedCity) {
       method: "GET"
 
     }).then(function (uv) {
-
       console.log(uv);
-      $(".uvText").text(" " + uv.value)
+      uvIndex = uv.value;
+      uvText = $(".uvText")
+      uvText.text(" " + uvIndex);
+
+      if(uvIndex <= "2") {
+        uvText.addClass("low");
+      } else if (uvIndex <= "5") {
+        uvText.addClass("moderate");
+      } else if (uvIndex <= "7") {
+        uvText.addClass("high");
+      } else if (uvIndex <= "10") {
+        uvText.addClass("veryHigh");
+      } else {
+        uvText.addClass("extreme");
+      }
+
     })
   })
 }
