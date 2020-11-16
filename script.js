@@ -40,7 +40,7 @@ function displayFiveDay(inputtedCity) {
 
     //temp converstion function
     function temp(i){
-      var temp = (response.list[i].main.temp);
+      var temp = response.list[i].main.temp;
       return temp;
     }
 
@@ -49,6 +49,14 @@ function displayFiveDay(inputtedCity) {
       var humidity = response.list[i].main.humidity
       return humidity;
     }
+
+    //icon function
+    function weatherIcon(i){
+      var icon = response.list[i].weather[0].icon;
+      var iconURL = "http://openweathermap.org/img/w/" + icon + ".png";
+      return iconURL;
+    }
+
     console.log(response);
     //Store lat and long as variables for UV Index call
     var lat = response.city.coord.lat;
@@ -64,26 +72,31 @@ function displayFiveDay(inputtedCity) {
     $(".dateOne").text(date(5));
     $(".tempOne").text(" " + temp(5) + " °F");
     $(".humidOne").text(" " + humidity(5) + " %");
-
+    $(".imgOne").attr("src", weatherIcon(5));
+    
     //update day 2
     $(".dateTwo").text(date(13));
     $(".tempTwo").text(" " + temp(13) + " °F");
     $(".humidTwo").text(" " + humidity(13) + " %");
+    $(".imgTwo").attr("src", weatherIcon(13));
 
     //update day 3
     $(".dateThree").text(date(21));
     $(".tempThree").text(" " + temp(21) + " °F");
     $(".humidThree").text(" " + humidity(21) + " %");
+    $(".imgThree").attr("src", weatherIcon(21));
 
     //update day 4
     $(".dateFour").text(date(29));
     $(".tempFour").text(" " + temp(29) + " °F");
     $(".humidFour").text(" " + humidity(29) + " %");
+    $(".imgFour").attr("src", weatherIcon(29));
 
     //update day 5
     $(".dateFive").text(date(37));
     $(".tempFive").text(" " + temp(37) + " °F");
     $(".humidFive").text(" " + humidity(37) + " %");
+    $(".imgFive").attr("src", weatherIcon(37));
 
     //UV Index API call
     let uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=5a57f19b58dbcee3e062fd11804936d7";
