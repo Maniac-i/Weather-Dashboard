@@ -1,81 +1,3 @@
-
-
-
-
-//Calls the Current Weather & UV Index API and populates jumbotron
-function displayCurrentWeather(inputtedCity) {
-
-  //Current Weather API call
-  let cityName = inputtedCity;
-  var currentURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=5a57f19b58dbcee3e062fd11804936d7";
-
-  $.ajax({
-
-    url: currentURL,
-
-    method: "GET"
-
-  }).then(function (city) {
-
-    var temp = (city.main.temp - 273.15) * (9 / 5) + 32;
-    lat = city.coord.lat;
-    lon = city.coord.lon;
-
-    $(".tempText").text(" " + temp.toFixed(1) + " °F");
-    $(".humidText").text(" " + city.main.humidity + " %");
-    $(".windText").text(" " + city.wind.speed + " MPH");
-    $("#city").text(city.name);
-
-    //UV Index API call
-    let uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=5a57f19b58dbcee3e062fd11804936d7";
-
-    $.ajax({
-
-      url: uvURL,
-
-      method: "GET"
-
-    }).then(function (uv) {
-      console.log(uv);
-      uvIndex = uv.value;
-      uvText = $(".uvText")
-      uvText.text(" " + uvIndex);
-
-      if(uvIndex <= "2") {
-        uvText.addClass("low");
-      } else if (uvIndex <= "5") {
-        uvText.addClass("moderate");
-      } else if (uvIndex <= "7") {
-        uvText.addClass("high");
-      } else if (uvIndex <= "10") {
-        uvText.addClass("veryHigh");
-      } else {
-        uvText.addClass("extreme");
-      }
-
-    })
-  })
-}
-
-//5 Day Forecast API Call
-function displayFiveDay() {
-
-  let cityName = "Columbus";
-  var fiveDayURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=5a57f19b58dbcee3e062fd11804936d7";
-
-  $.ajax({
-
-    url: fiveDayURL,
-
-    method: "GET"
-
-  }).then(function (city) {
-
-    //Do something
-
-  })
-}
-
 //click function for search button
 //creates list item with inputted city name
 $(".btn").on("click", function (event) {
@@ -92,7 +14,104 @@ $(".btn").on("click", function (event) {
 
   $("#cityList").append(createdListItem);
 
-  displayCurrentWeather(inputtedCity);
-
+  displayFiveDay(inputtedCity);
 
 });
+
+//5 Day Forecast API Call
+function displayFiveDay(inputtedCity) {
+
+  var cityName = inputtedCity;
+  var fiveDayURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&units=imperial&appid=5a57f19b58dbcee3e062fd11804936d7";
+
+  $.ajax({
+
+    url: fiveDayURL,
+
+    method: "GET"
+
+  }).then(function (response) {
+
+    //date function
+    function date(i) {
+      var date = response.list[i].dt_txt;
+      return moment(date).format("L");
+    }
+
+    //temp converstion function
+    function temp(i){
+      var temp = (response.list[i].main.temp);
+      return temp;
+    }
+
+    //humidity function
+    function humidity(i) {
+      var humidity = response.list[i].main.humidity
+      return humidity;
+    }
+    console.log(response);
+    //Store lat and long as variables for UV Index call
+    var lat = response.city.coord.lat;
+    var lon = response.city.coord.lon;
+
+    //update jumbotron
+    $(".tempText").text(" " + temp(0) + " °F");
+    $(".humidText").text(" " + humidity(0) + " %");
+    $(".windText").text(" " + response.list[0].wind.speed + " MPH");
+    $("#city").text(response.city.name);
+
+    //update day 1
+    $(".dateOne").text(date(5));
+    $(".tempOne").text(" " + temp(5) + " °F");
+    $(".humidOne").text(" " + humidity(5) + " %");
+
+    //update day 2
+    $(".dateTwo").text(date(13));
+    $(".tempTwo").text(" " + temp(13) + " °F");
+    $(".humidTwo").text(" " + humidity(13) + " %");
+
+    //update day 3
+    $(".dateThree").text(date(21));
+    $(".tempThree").text(" " + temp(21) + " °F");
+    $(".humidThree").text(" " + humidity(21) + " %");
+
+    //update day 4
+    $(".dateFour").text(date(29));
+    $(".tempFour").text(" " + temp(29) + " °F");
+    $(".humidFour").text(" " + humidity(29) + " %");
+
+    //update day 5
+    $(".dateFive").text(date(37));
+    $(".tempFive").text(" " + temp(37) + " °F");
+    $(".humidFive").text(" " + humidity(37) + " %");
+
+    //UV Index API call
+    let uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=5a57f19b58dbcee3e062fd11804936d7";
+
+    $.ajax({
+
+      url: uvURL,
+
+      method: "GET"
+
+    }).then(function (uv) {
+
+      uvIndex = uv.value;
+      uvText = $(".uvText")
+      uvText.text(" " + uvIndex);
+
+      if (uvIndex <= "2") {
+        uvText.addClass("low");
+      } else if (uvIndex <= "5") {
+        uvText.addClass("moderate");
+      } else if (uvIndex <= "7") {
+        uvText.addClass("high");
+      } else if (uvIndex <= "10") {
+        uvText.addClass("veryHigh");
+      } else {
+        uvText.addClass("extreme");
+      }
+
+  })
+})
+}
