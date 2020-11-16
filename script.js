@@ -128,3 +128,8 @@ function displayFiveDay(inputtedCity) {
   })
 })
 }
+
+//Calls displayFiveDay function when a previous searched city is clicked
+$(document).on("click", ".list-group-item", function() {
+  displayFiveDay($(this).attr("data-name"));
+});
