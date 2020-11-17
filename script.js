@@ -1,3 +1,14 @@
+//sets initial city shown
+function setWeatherDisplay() {
+  if (!localStorage.getItem("searchedCity")) {
+    displayFiveDay("Cleveland");
+  } else {
+    displayFiveDay(localStorage.getItem("searchedCity"));
+  }
+}
+
+setWeatherDisplay();
+
 //click function for search button
 //creates list item with inputted city name
 $(".btn").on("click", function (event) {
@@ -13,6 +24,8 @@ $(".btn").on("click", function (event) {
   var createdListItem = createdListItem.attr("class", "list-group-item");
 
   $("#cityList").append(createdListItem);
+
+  localStorage.setItem("searchedCity", inputtedCity);
 
   displayFiveDay(inputtedCity);
 
@@ -39,7 +52,7 @@ function displayFiveDay(inputtedCity) {
     }
 
     //temp converstion function
-    function temp(i){
+    function temp(i) {
       var temp = response.list[i].main.temp;
       return temp;
     }
@@ -51,13 +64,12 @@ function displayFiveDay(inputtedCity) {
     }
 
     //icon function
-    function weatherIcon(i){
+    function weatherIcon(i) {
       var icon = response.list[i].weather[0].icon;
       var iconURL = "http://openweathermap.org/img/w/" + icon + ".png";
       return iconURL;
     }
 
-    console.log(response);
     //Store lat and long as variables for UV Index call
     var lat = response.city.coord.lat;
     var lon = response.city.coord.lon;
@@ -67,13 +79,15 @@ function displayFiveDay(inputtedCity) {
     $(".humidText").text(" " + humidity(0) + " %");
     $(".windText").text(" " + response.list[0].wind.speed + " MPH");
     $("#city").text(response.city.name);
+    $(".jumboDate").text(date(0));
+    $(".jumboIcon").attr("src", weatherIcon(0));
 
     //update day 1
     $(".dateOne").text(date(5));
     $(".tempOne").text(" " + temp(5) + " °F");
     $(".humidOne").text(" " + humidity(5) + " %");
     $(".imgOne").attr("src", weatherIcon(5));
-    
+
     //update day 2
     $(".dateTwo").text(date(13));
     $(".tempTwo").text(" " + temp(13) + " °F");
@@ -109,27 +123,28 @@ function displayFiveDay(inputtedCity) {
 
     }).then(function (uv) {
 
+      //sets UV Index in jumbotron
       uvIndex = uv.value;
       uvText = $(".uvText")
       uvText.text(" " + uvIndex);
 
-      if (uvIndex <= "2") {
-        uvText.addClass("low");
-      } else if (uvIndex <= "5") {
-        uvText.addClass("moderate");
-      } else if (uvIndex <= "7") {
-        uvText.addClass("high");
-      } else if (uvIndex <= "10") {
-        uvText.addClass("veryHigh");
+      //changes background color of UV Index in jumbotron
+      if (uvIndex <= 2) {
+        uvText.attr("id", "low");
+      } else if (uvIndex <= 5) {
+        uvText.attr("id", "moderate");
+      } else if (uvIndex <= 7) {
+        uvText.attr("id", "high");
+      } else if (uvIndex <= 10) {
+        uvText.attr("id", "veryHigh");
       } else {
-        uvText.addClass("extreme");
+        uvText.attr("id", "extreme");
       }
-
+    })
   })
-})
 }
 
 //Calls displayFiveDay function when a previous searched city is clicked
-$(document).on("click", ".list-group-item", function() {
+$(document).on("click", ".list-group-item", function () {
   displayFiveDay($(this).attr("data-name"));
 });

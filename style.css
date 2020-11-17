@@ -32,22 +32,23 @@
   font-size: 25px;
 }
 
-.low {
+#low {
   background-color: green;
 }
 
-.moderate {
+#moderate {
   background-color: yellow;
 }
 
-.high {
+#high {
   background-color: orange;
 }
 
-.veryHigh {
+#veryHigh {
   background-color: red;
 }
 
-.extreme {
+#extreme {
   background-color: purple;
 }
+
