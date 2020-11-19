@@ -1,8 +1,10 @@
 //sets initial city shown
 function setWeatherDisplay() {
   if (!localStorage.getItem("searchedCity")) {
-    displayFiveDay("Cleveland");
+    displayCurrentWeather("Cleveland");
+    displayFiveDay("Cleveland")
   } else {
+    displayCurrentWeather(localStorage.getItem("searchedCity"));
     displayFiveDay(localStorage.getItem("searchedCity"));
   }
 }
@@ -28,14 +30,40 @@ $(".btn").on("click", function (event) {
   localStorage.setItem("searchedCity", inputtedCity);
 
   displayFiveDay(inputtedCity);
+  displayCurrentWeather(inputtedCity);
 
 });
+
+//Current Weather API Call
+function displayCurrentWeather(inputtedCity) {
+
+  let cityName = inputtedCity;
+  let currentWeatherURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial&appid=5a57f19b58dbcee3e062fd11804936d7";
+
+  $.ajax({
+
+    url: currentWeatherURL,
+
+    method: "GET"
+
+  }).then(function (response) {
+
+    //update jumbotron
+    $(".tempText").text(" " + response.main.temp + " °F");
+    $(".humidText").text(" " + response.main.humidity + " %");
+    $(".windText").text(" " + response.wind.speed + " MPH");
+    $("#city").text(response.name);
+    $(".jumboDate").text(moment().format('L'));
+    $(".jumboIcon").attr("src", "http://openweathermap.org/img/w/" + response.weather[0].icon + ".png");
+
+  })
+}
 
 //5 Day Forecast API Call
 function displayFiveDay(inputtedCity) {
 
-  var cityName = inputtedCity;
-  var fiveDayURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&units=imperial&appid=5a57f19b58dbcee3e062fd11804936d7";
+  let cityName = inputtedCity;
+  let fiveDayURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&units=imperial&appid=5a57f19b58dbcee3e062fd11804936d7";
 
   $.ajax({
 
@@ -73,14 +101,6 @@ function displayFiveDay(inputtedCity) {
     //Store lat and long as variables for UV Index call
     var lat = response.city.coord.lat;
     var lon = response.city.coord.lon;
-
-    //update jumbotron
-    $(".tempText").text(" " + temp(0) + " °F");
-    $(".humidText").text(" " + humidity(0) + " %");
-    $(".windText").text(" " + response.list[0].wind.speed + " MPH");
-    $("#city").text(response.city.name);
-    $(".jumboDate").text(date(0));
-    $(".jumboIcon").attr("src", weatherIcon(0));
 
     //Update 5 day forecast cards
     $(".day").each(function () {
@@ -129,4 +149,5 @@ function displayFiveDay(inputtedCity) {
 //Calls displayFiveDay function when a previous searched city is clicked
 $(document).on("click", ".list-group-item", function () {
   displayFiveDay($(this).attr("data-name"));
+  currentWeatherURL((this).attr("data-name"));
 });
