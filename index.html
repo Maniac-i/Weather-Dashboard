@@ -22,7 +22,7 @@
     <div class="row">
 
       <!--Left Search Panel-->
-      <div class="col-4 bg-light pb-4 searchCity">
+      <aside class="col-4 bg-light pb-4 searchCity">
         <h2 id="searchForACity">Search for a City:</h2>
         <form class="form-inline">
           <input id="citySearch" class="form-control mr-sm-2" type="search" placeholder="" aria-label="Search">
@@ -32,10 +32,10 @@
         <ul id="cityList" class="list-group">
           <li class="list-group-item" data-name="Cleveland">Cleveland</li>
         </ul>
-      </div>
+      </aside>
 
       <div class="col-8">
-        <div class="row">
+        <main class="row">
 
           <!--Main Jumbotron-->
           <div class="jumbotron mt-2">
@@ -49,14 +49,14 @@
             <div class="uvIndex mb-n4">UV Index:<span class="uvText"></span></div>
 
           </div>
-        </div>
+        </main>
 
         <!--5 Day Forecast Row-->
         <h2 id="forecast">5-Day Forecast:</h2>
 
         <!--Day 1-->
-        <div class="row">
-          <div class="col day" data-array="5">
+        <section class="row">
+          <article class="col day" data-array="5">
             <div class="card w-auto">
               <div class="card-body">
                 <div class="date mt-n3 mb-3"><span class="date"></span></div>
@@ -65,10 +65,10 @@
                 <div class="humidity mb-0">Humidity:<span class="humid"></span></div>
               </div>
             </div>
-          </div>
+          </article>
 
           <!--Day 2-->
-          <div class="col day" data-array="13">
+          <article class="col day" data-array="13">
             <div class="card w-auto">
               <div class="card-body">
                 <div class="date mt-n3 mb-3"><span class="date"></span></div>
@@ -77,10 +77,10 @@
                 <div class="humidity mb-0">Humidity:<span class="humid"></span></div>
               </div>
             </div>
-          </div>
+          </article>
 
           <!--Day 3-->
-          <div class="col day" data-array="21">
+          <article class="col day" data-array="21">
             <div class="card w-auto">
               <div class="card-body">
                 <div class="date mt-n3 mb-3"><span class="date"></span></div>
@@ -89,10 +89,10 @@
                 <div class="humidity mb-0">Humidity:<span class="humid"></span></div>
               </div>
             </div>
-          </div>
+          </article>
 
           <!--Day 4-->
-          <div class="col day" data-array="29">
+          <article class="col day" data-array="29">
             <div class="card w-auto">
               <div class="card-body">
                 <div class="date mt-n3 mb-3"><span class="date"></span></div>
@@ -101,10 +101,10 @@
                 <div class="humidity mb-0">Humidity:<span class="humid"></span></div>
               </div>
             </div>
-          </div>
+          </article>
 
           <!--Day 5-->
-          <div class="col day" data-array="37">
+          <article class="col day" data-array="37">
             <div class="card w-auto">
               <div class="card-body">
                 <div class="date mt-n3 mb-3"><span class="date"></span></div>
@@ -113,11 +113,11 @@
                 <div class="humidity mb-0">Humidity:<span class="humid"></span></div>
               </div>
             </div>
-          </div>
+          </article>
 
 
 
-        </div>
+        </section>
       </div>
     </div>
   </div>
