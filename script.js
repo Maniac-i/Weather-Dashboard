@@ -82,9 +82,9 @@ function displayFiveDay(inputtedCity) {
     $(".jumboDate").text(date(0));
     $(".jumboIcon").attr("src", weatherIcon(0));
 
-    //Update 5day forecast cards
-    $(".day").each(function() {
-      
+    //Update 5 day forecast cards
+    $(".day").each(function () {
+
       arrayIndex = $(this).attr("data-array");
 
       $(this).find(".date").text(date(arrayIndex));
