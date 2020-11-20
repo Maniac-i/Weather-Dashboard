@@ -47,7 +47,7 @@ function displayCurrentWeather(inputtedCity) {
     method: "GET"
 
   }).then(function (response) {
-
+    
     //update jumbotron
     $(".tempText").text(" " + response.main.temp + " °F");
     $(".humidText").text(" " + response.main.humidity + " %");
@@ -56,7 +56,40 @@ function displayCurrentWeather(inputtedCity) {
     $(".jumboDate").text(moment().format('L'));
     $(".jumboIcon").attr("src", "http://openweathermap.org/img/w/" + response.weather[0].icon + ".png");
 
-  })
+        //Store lat and long as variables for UV Index call
+        var lat = response.coord.lat;
+        var lon = response.coord.lon;
+
+        //UV Index API call
+        let uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=5a57f19b58dbcee3e062fd11804936d7";
+
+        $.ajax({
+    
+          url: uvURL,
+    
+          method: "GET"
+    
+        }).then(function (uv) {
+    
+          //sets UV Index in jumbotron
+          uvIndex = uv.value;
+          uvText = $(".uvText")
+          uvText.text(" " + uvIndex);
+    
+          //changes background color of UV Index in jumbotron
+          if (uvIndex <= 2) {
+            uvText.attr("id", "low");
+          } else if (uvIndex <= 5) {
+            uvText.attr("id", "moderate");
+          } else if (uvIndex <= 7) {
+            uvText.attr("id", "high");
+          } else if (uvIndex <= 10) {
+            uvText.attr("id", "veryHigh");
+          } else {
+            uvText.attr("id", "extreme");
+          }
+        })
+  });
 }
 
 //5 Day Forecast API Call
@@ -73,7 +106,7 @@ function displayFiveDay(inputtedCity) {
 
   }).then(function (response) {
 
-    //date function
+    //date formatting function
     function date(i) {
       var date = response.list[i].dt_txt;
       return moment(date).format("L");
@@ -91,16 +124,12 @@ function displayFiveDay(inputtedCity) {
       return humidity;
     }
 
-    //icon function
+    //icon url function
     function weatherIcon(i) {
       var icon = response.list[i].weather[0].icon;
       var iconURL = "http://openweathermap.org/img/w/" + icon + ".png";
       return iconURL;
     }
-
-    //Store lat and long as variables for UV Index call
-    var lat = response.city.coord.lat;
-    var lon = response.city.coord.lon;
 
     //Update 5 day forecast cards
     $(".day").each(function () {
@@ -113,41 +142,11 @@ function displayFiveDay(inputtedCity) {
       $(this).find(".img").attr("src", weatherIcon(arrayIndex));
 
     });
-
-    //UV Index API call
-    let uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=5a57f19b58dbcee3e062fd11804936d7";
-
-    $.ajax({
-
-      url: uvURL,
-
-      method: "GET"
-
-    }).then(function (uv) {
-
-      //sets UV Index in jumbotron
-      uvIndex = uv.value;
-      uvText = $(".uvText")
-      uvText.text(" " + uvIndex);
-
-      //changes background color of UV Index in jumbotron
-      if (uvIndex <= 2) {
-        uvText.attr("id", "low");
-      } else if (uvIndex <= 5) {
-        uvText.attr("id", "moderate");
-      } else if (uvIndex <= 7) {
-        uvText.attr("id", "high");
-      } else if (uvIndex <= 10) {
-        uvText.attr("id", "veryHigh");
-      } else {
-        uvText.attr("id", "extreme");
-      }
-    })
   })
 }
 
 //Calls displayFiveDay function when a previous searched city is clicked
 $(document).on("click", ".list-group-item", function () {
   displayFiveDay($(this).attr("data-name"));
-  currentWeatherURL((this).attr("data-name"));
+  displayCurrentWeather($(this).attr("data-name"));
 });
