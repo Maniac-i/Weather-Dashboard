@@ -49,7 +49,7 @@ function displayCurrentWeather(inputtedCity) {
   }).then(function (response) {
     
     //update jumbotron
-    $(".tempText").text(" " + response.main.temp + " °F");
+    $(".tempText").text(" " + response.main.temp.toFixed(1) + " °F");
     $(".humidText").text(" " + response.main.humidity + " %");
     $(".windText").text(" " + response.wind.speed + " MPH");
     $("#city").text(response.name);
@@ -114,7 +114,7 @@ function displayFiveDay(inputtedCity) {
 
     //temp converstion function
     function temp(i) {
-      var temp = response.list[i].main.temp;
+      var temp = response.list[i].main.temp.toFixed(1);
       return temp;
     }
 
