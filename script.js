@@ -54,14 +54,14 @@ function displayCurrentWeather(inputtedCity) {
     $(".windText").text(" " + response.wind.speed + " MPH");
     $("#city").text(response.name);
     $(".jumboDate").text(moment().format('L'));
-    $(".jumboIcon").attr("src", "http://openweathermap.org/img/w/" + response.weather[0].icon + ".png");
+    $(".jumboIcon").attr("src", "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png");
 
         //Store lat and long as variables for UV Index call
         var lat = response.coord.lat;
         var lon = response.coord.lon;
 
         //UV Index API call
-        let uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=5a57f19b58dbcee3e062fd11804936d7";
+        let uvURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=5a57f19b58dbcee3e062fd11804936d7";
 
         $.ajax({
     
