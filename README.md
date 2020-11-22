@@ -5,6 +5,8 @@ Assignment 6 for the OSU Bootcamp
 
 This project utilized serverside API's and AJAX to display weather information. JQuery was used for DOM manipulation, the CSS framework Bootstrap was used to style the page, and semantic html was implimented. 
 
+https://maniac-i.github.io/Weather-Dashboard/
+
 **How to Use** 
 
 This Weather Dashboard displays the current weather, including the temperature, humidity, wind speed and UV Index, sa well as the 5 day forecast with the temperature and humidity. Enter a city into the search bar and click search. This will populate both the current weather and 5 day forecast. You may also click on a previously searched city. 
